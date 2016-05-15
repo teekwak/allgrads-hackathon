@@ -12,7 +12,7 @@
 				var text = $('.stringTime').val().replace(/-/g, '/');
 
 				text = new Date(text).getTime() / 1000;
-
+/*
 				$.ajax({
 					type: "post",
 					url: "http://localhost:9000/getData.php",
@@ -26,6 +26,17 @@
                     console.log("failed postSubmission: " + textStatus + " " + errorThrown);
                 });
 			}
+*/
+				$.ajax({
+					type: "post",
+					url: "http://localhost:9000/2.php",
+					data: {}
+				}).success(function(data) {
+					console.log("success: " + data.status);
+				}).fail(function(jqXHR, textStatus, errorThrown) {
+                    console.log("failed: " + textStatus + " " + errorThrown);
+                });
+
 		</script>
 	</body>
 </html>

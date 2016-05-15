@@ -1,20 +1,21 @@
-<!DOCTYPE html>
-<html>
-	<head>
-	</head>
-	<body>
+
 		<?php
 			ini_set('display_errors', 'on');
 
 			// global variables!!!
-			$startTimestamp = 1441090800; // 09-01-2015 00:00:00
-			$endTimestamp = 1443682800; // 10-01-2015 00:00:00
+			//$startTimestamp = 1441090800; // 09-01-2015 00:00:00
+			//$endTimestamp = 1443682800; // 10-01-2015 00:00:00
+
+			$startTimestamp = 1443686400; // 09-01-2015 00:00:00
+			$endTimestamp = 1446361200; // 10-01-2015 00:00:00
+
 			$leftBound = $startTimestamp;
 			$rightBound = $leftBound + (60 * 60 - 1);
 			$arrayForHour = array();
+			$h = 1;
 
 			$conn = new PDO("mysql:host=localhost; dbname=allgrads", 'root', 'root');
-			$sql = "SELECT * FROM mobile_signal_info ORDER BY time";
+			$sql = "SELECT * FROM mobile_signal_info_october";
 
 			foreach($conn->query($sql) as $row) {
 				// convert date to timestamp
@@ -25,12 +26,16 @@
 				}
 				else {
 					// print out all elements in $arrayForHour
-					echo "<p>" . date('m/d/Y H:i', $leftBound) . " - " . date('m/d/Y H:i', $rightBound) . "</p>";
+					//echo "<p>" . date('m/d/Y H:i', $leftBound) . " - " . date('m/d/Y H:i', $rightBound) . "</p>";
 
 					// $value = row in MySQL
 					foreach($arrayForHour as $value) {
+						$sql = "INSERT INTO modified (deviceId, hour, time, latitude, longitude) VALUES (" . $value['deviceId'] . ", " . $h . ", " . strtotime($value['time']) . ", " . $value['latitude'] . ", " . $value['longitude'] . ");";
 
+						$conn->query($sql);
 					}
+
+					//$h += 1;
 
 					$uniqueIdArray = array();
 
@@ -38,6 +43,7 @@
 					while($currentRowTimestamp > $rightBound) {
 						$leftBound = $rightBound + 1;
 						$rightBound = $leftBound + (60 * 60 - 1);
+						$h += 1;
 					}
 
 					$arrayForHour = array();
@@ -45,9 +51,5 @@
 				}
 			}
 
-			echo "<p>string</p>";
-
 			$conn = null;
 		?>
-	</body>
-</html>

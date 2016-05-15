@@ -49,6 +49,10 @@
 				margin-left: 10px;
 				margin-right: 10px;
 			}
+
+			.legend div, .legend div>div{
+				display: inline-block;
+			}
 	    </style>
 	</head>
 	<body>
@@ -74,6 +78,19 @@
 				</tr>
 			</table>
 		</div>
+
+		<div class="legend" style="width: 100%; text-align: center; margin: 15px;">
+			<div>
+				<div style="background-color: #ff6600; width: 15px; height: 15px;"></div> Commuting
+			</div>
+			<div style="margin-left: 15px; margin-right: 15px;">
+				<div style="background-color: #00ff00; width: 15px; height: 15px;"></div> Work
+			</div>
+			<div>
+				<div style="background-color: #ff0000; width: 15px; height: 15px;"></div> Home
+			</div>
+		</div>
+
 		<div style="width: 100%; text-align: center;">
 			<h3>Number of data points on map: <span id="dataPointCount">0</span></h3>
 		</div>

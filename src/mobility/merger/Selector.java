@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import mobility.util.ClassifierPropertyManager;
+import mobility.util.MergerPropertyManager;
 import mobility.util.ReadWriteFileBuffer;
 
 /**
@@ -18,29 +19,22 @@ public class Selector {
 	ArrayList<String> mobiliyList;
 	ArrayList<String> appLogList;
 	
-	public static void main (String args[]){
-		Selector selector = new Selector();
-		selector.run();
-	}
-
-	public void run(){
-		this.loadParameters();
-		for(String file:this.fileList){
-			ArrayList<String> buffer = ReadWriteFileBuffer.readToBuffer(this.readPath+"//"+file);
-			HashMap<String, ArrayList<String>> map = buildMap(buffer);
-			buffer = categorize(map);
-			ReadWriteFileBuffer.writeBackToBuffer(buffer,this.writePath+ "//", "new_00025_"+file);
+	public ArrayList<String> select(String filePath,int dateFieldPosition, Long lowerBoundDate, Long upperBoundDate){
+		
+		ArrayList<String> selectedLines =  new ArrayList<String>();
+		
+		//Readfile to String
+		ArrayList<String> buffer = ReadWriteFileBuffer.readToBuffer(filePath);
+		
+		for(String line: buffer){
+			String[] tokens = line.split(",");
+			String lineTimeStamp = tokens[dateFieldPosition];
+			Long lineTimeStampLong = new Long(lineTimeStamp.substring(1, lineTimeStamp.length()-1));
+			if(lineTimeStampLong<upperBoundDate && lineTimeStampLong>lowerBoundDate){
+				line = line.concat(","+lineTimeStampLong.toString());
+				selectedLines.add(line);
+			}
 		}
+		return selectedLines;
 	}
-
-	
-	private void loadParameters(){
-		ClassifierPropertyManager manager = new ClassifierPropertyManager();
-		manager.initialize();
-		this. = manager.READ_PATH;
-		this.fileList = manager.deviceFileList;
-		this.writePath = manager.WRITE_PATH;
-	}
-
-	
 }

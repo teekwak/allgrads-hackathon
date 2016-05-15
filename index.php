@@ -74,7 +74,9 @@
 				</tr>
 			</table>
 		</div>
-
+		<div style="width: 100%; text-align: center;">
+			<h3>Number of data points on map: <span id="dataPointCount">0</span></h3>
+		</div>
 
 
 		<!-- D3 stuff -->
@@ -154,6 +156,7 @@
 				}).success(function(data) {
 					//console.log("status: " + data.status); // returned as EPOCH timestamp (IN SECONDS)
 					latLongPairs = [];
+					totalCount = 0;
 
 					console.log(data);
 					// TRIM each element when they come back
@@ -184,8 +187,6 @@
 			        		actualColor = "#ff0000";
 			        	}
 
-			        	// increase radius by count
-
 			      		var cityCircle = new google.maps.Circle({
 						   	strokeColor: '#000000',
 						   	strokeOpacity: 0.8,
@@ -198,7 +199,10 @@
 						   	// radisu: 200
 						});
 
+			      		totalCount += parseInt(latLongPairs[x].count);
 			        }
+
+			        $('#dataPointCount').text(totalCount);
 
 				}).fail(function(jqXHR, textStatus, errorThrown) {
                     console.log("failed postSubmission: " + textStatus + " " + errorThrown);

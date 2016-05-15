@@ -67,7 +67,7 @@
 				<tr>
 					<td style="position: relative; z-index:100; margin-bottom: -50px; width: 100%; text-align: center;">
 						<button onclick="buttonPress(-1);"> - </button>
-						<span id="currentDate">Tue Sep 01 2015 00:00:00</span>
+						<span id="currentDate">Tue Oct 01 2015 00:00:00</span>
 						<button onclick="buttonPress(1);"> + </button>
 					</td>
 				</tr>

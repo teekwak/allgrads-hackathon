@@ -40,6 +40,19 @@ function processTimestamp() {
 
 	}
 
+	$sql2 = "SELECT app_short, mobility, COUNT(*) as `count` from ".$_POST['month']."_app WHERE time >= " . $_POST['timestamp'] . " AND time < " . ($_POST['timestamp'] + 3600) . " GROUP BY app_short, mobility";
+	$result2 = $mysqli->query($sql2);
+
+	$temp2 = array();
+	if ($result2->num_rows > 0) {
+	    // output data of each row
+	    while($row2 = $result2->fetch_assoc()) {
+	        array_push($temp2, $row2);
+	    }
+	} else {
+
+	}
+
 	//array_push($temp, array("outerKey"=>array("innerKey"=>"innerValue")));
 	//echo json_encode(array("status"=>$temp));
 
@@ -54,7 +67,7 @@ function processTimestamp() {
 	// select deviceId, mobility, COUNT(*) AS `count` from september_mobile_signal GROUP BY deviceId, mobility ORDER BY mobility;
 
 
-	echo json_encode(array("status"=>array("map"=>$temp, "tree"=>"false")));
+	echo json_encode(array("status"=>array("map"=>$temp, "tree"=>$temp2)));
 
 	$mysqli->close();
 }

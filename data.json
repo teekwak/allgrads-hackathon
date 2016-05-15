@@ -7,13 +7,13 @@
     {
      "name": "apps",
      "children": [
-      {"name": "AgglomerativeCluster", "count":4, "color": "#ff6600"},
-      {"name": "CommunityStructure", "count":1, "color": "#ff6600"},
-      {"name": "MergeEdge", "count":1, "color": "#ff6600"},
-      {"name": "BetweennessCentrality", "count":1, "color": "#00ff00"},
-      {"name": "LinkDistance", "count":1, "color": "#00ff00"},
-      {"name": "BetweennessCentrality", "count":1, "color": "#ff0000"},
-      {"name": "LinkDistance", "count":1, "color": "#ff0000"}
+      {"name": "Facebook", "count":10, "color": "#ff6600"},
+      {"name": "Chrome", "count":1, "color": "#ff6600"},
+      {"name": "YouTube", "count":2, "color": "#ff6600"},
+      {"name": "Facebook Messenger", "count":3, "color": "#00ff00"},
+      {"name": "Snapchat", "count":1, "color": "#00ff00"},
+      {"name": "Ebay", "count":5, "color": "#ff0000"},
+      {"name": "Angry Birds", "count":6, "color": "#ff0000"}
      ]
     }
    ]

@@ -9,7 +9,7 @@ public class PropertyManager {
 
 	private String propertiesFileName="classifier.properties";
 	
-	private String propertiesPath="C://Users//adrianoc//Documents//GitHub//allgrads-hackathon//src";
+	private String propertiesPath="C://Users//adrianoc//Documents//GitHub//allgrads-hackathon//src//";
 	
 	public String ORIGINAL_DEVICE_FILES =""; //Default value
 	
@@ -49,7 +49,7 @@ public class PropertyManager {
 		
 		String[] fileNameTokens= fileNames.split(",");
 		for(String name : fileNameTokens){
-			list.add(name);
+			list.add(name.trim());
 		}
 		return list;
 	}

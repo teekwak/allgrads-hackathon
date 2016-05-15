@@ -27,9 +27,10 @@ public class Classifier {
 
 	public void run(){
 		this.loadParameters();
-		for(String file:fileList){
+		for(String file:this.fileList){
 			ArrayList<String> buffer = ReadWriteFileBuffer.readToBuffer(this.filesPath+"//"+file);
-			buffer = categorizeCommuting(buffer);
+			HashMap<String, ArrayList<String>> map = buildMap(buffer);
+			buffer = categorize(map);
 			ReadWriteFileBuffer.writeBackToBuffer(buffer,this.filesPath+ "//", "new_"+file);
 		}
 	}
@@ -45,7 +46,7 @@ public class Classifier {
 		this.businessHoursStart = manager.businessHoursStart;
 	}
 	
-	private ArrayList<String> categorizeCommuting(ArrayList<String> buffer) {
+	private HashMap<String, ArrayList<String>> buildMap(ArrayList<String> buffer) {
 
 		//DEVICE ID, HOUR
 		HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
@@ -67,21 +68,19 @@ public class Classifier {
 				sameDeviceSameHourLines.add(line);
 				map.put(hashKey, sameDeviceSameHourLines);
 			}
-
 		}
-
-		return null;
+		return map;
 	}
 
-	private void checkMoving(HashMap<String, ArrayList<String>> map){
+	private  ArrayList<String> categorize(HashMap<String, ArrayList<String>> map){
 
-		HashMap<String, ArrayList<String>> taggedMap = new HashMap<String, ArrayList<String>>();
+		ArrayList<String> categorizedList = new  ArrayList<String>();
 
 		for(Map.Entry<String, ArrayList<String>> entry : map.entrySet()){
 			ArrayList<String> list = entry.getValue();
 			if(list!=null && list.size()>0){
 				String mobilityFlag="";
-				if(checkMovement(list)){
+				if(hasMovement(list)){
 					mobilityFlag = "Commuting";
 				}
 				else{
@@ -95,38 +94,42 @@ public class Classifier {
 				list = this.fillMobilityFields(list, mobilityFlag);
 
 				String hashKey = entry.getKey();
-				taggedMap.put(hashKey, list);
+				categorizedList.addAll(list);
 			}
 		}
+		return categorizedList;
 	}
 
 
-	private boolean checkMovement( ArrayList<String> lineList) {
+	public boolean hasMovement( ArrayList<String> lineList) {
 
 		Double sourceLatitude = extractField(3,lineList.get(0));
 		Double sourceLongitude = extractField(4,lineList.get(0));
 
-		boolean noMovementFound = true;
+		boolean movementFound = false;
 		int index = 1;
-		while(noMovementFound || index<lineList.size()){
+		while(index<lineList.size()){
 			String line = lineList.get(index);
 			Double latitute = extractField(3,line);
 			Double longitude = extractField(4,line);
-			if((sourceLatitude - latitute > this.precision) || 
-					(sourceLongitude - longitude > this.precision))
+			if((sourceLatitude - latitute != this.precision) || 
+					(sourceLongitude - longitude != this.precision))
 			{//moving!
-				noMovementFound=false;
+				movementFound=true;
+				break;
 			}
 			index++;
 		}	
-		return noMovementFound;
+		System.out.println("movementFound: "+movementFound);
+		return movementFound;
 	}
 
 
 	private Double extractField(int i, String sourceLine) {
 
 		String[] tokens = sourceLine.split(",");
-		return new Double(tokens[i]);
+		System.out.println(new Double(tokens[i].substring(1, tokens[i].length()-1).trim()));
+		return new Double(tokens[i].substring(1, tokens[i].length()-1).trim());
 	}
 
 	public boolean checkAtHome(String line){
@@ -135,10 +138,10 @@ public class Classifier {
 		Calendar calendar = Calendar.getInstance();
 		Date date = new Date(timeStamp *1000);
 		calendar.setTime(date);
-		Integer hour = calendar.get(Calendar.HOUR_OF_DAY); //Military 24h day.
+		Integer hour = calendar.get(Calendar.HOUR_OF_DAY) + 3; //Military 24h day.
 		Integer AmPm = calendar.get(Calendar.AM_PM);
 
-		System.out.println("hour:"+ hour+", AM/PM:"+AmPm);
+		//System.out.println("hour:"+ hour+", AM/PM:"+AmPm);
 
 		if(hour>this.businessHoursEnd || hour<this.businessHoursStart)
 			return true;

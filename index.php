@@ -84,10 +84,10 @@
 				<div style="background-color: #ff6600; width: 15px; height: 15px;"></div> Commuting
 			</div>
 			<div style="margin-left: 15px; margin-right: 15px;">
-				<div style="background-color: #00ff00; width: 15px; height: 15px;"></div> Work
+				<div style="background-color: #ff0000; width: 15px; height: 15px;"></div> Work
 			</div>
 			<div>
-				<div style="background-color: #ff0000; width: 15px; height: 15px;"></div> Home
+				<div style="background-color: #00ff00; width: 15px; height: 15px;"></div> Home
 			</div>
 		</div>
 
@@ -197,11 +197,13 @@
 			        	if(latLongPairs[x].mobility.trim() == "Commuting") {
 			        		actualColor = "#ff6600";
 			        	}
-			        	else if(latLongPairs[x].mobility.trim() == "Work") {
-	    					actualColor = "#00ff00";
+			        	//else if(latLongPairs[x].mobility.trim() == "Work") {
+	    				else if(latLongPairs[x].mobility.trim() == "Home") {
+	    					actualColor = "#ff0000";
 			        	}
-			        	else if(latLongPairs[x].mobility.trim() == "Home"){
-			        		actualColor = "#ff0000";
+			        	//else if(latLongPairs[x].mobility.trim() == "Home"){
+			        	else if(latLongPairs[x].mobility.trim() == "Work"){
+			        		actualColor = "#00ff00";
 			        	}
 
 			      		var cityCircle = new google.maps.Circle({

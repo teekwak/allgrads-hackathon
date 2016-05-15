@@ -3,11 +3,8 @@
 			ini_set('display_errors', 'on');
 
 			// global variables!!!
-			//$startTimestamp = 1441090800; // 09-01-2015 00:00:00
-			//$endTimestamp = 1443682800; // 10-01-2015 00:00:00
-
-			$startTimestamp = 1443686400; // 09-01-2015 00:00:00
-			$endTimestamp = 1446361200; // 10-01-2015 00:00:00
+			$startTimestamp = 1446361200; // 09-01-2015 00:00:00
+			$endTimestamp = 1448956800; // 10-01-2015 00:00:00
 
 			$leftBound = $startTimestamp;
 			$rightBound = $leftBound + (60 * 60 - 1);
@@ -15,7 +12,7 @@
 			$h = 1;
 
 			$conn = new PDO("mysql:host=localhost; dbname=allgrads", 'root', 'root');
-			$sql = "SELECT * FROM mobile_signal_info_october";
+			$sql = "SELECT * FROM mobile_signal_info_november";
 
 			foreach($conn->query($sql) as $row) {
 				// convert date to timestamp

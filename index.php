@@ -44,7 +44,6 @@
 		<div class="container">
 			<div id="map"></div>
 			<div id="treemap"></div>
-			<div id="chart"></div>
 		</div>
 
 		<div>
@@ -52,8 +51,8 @@
 			<button onclick="submitStringTime();">Submit</button>
 
 			<form>
-			  <label><input type="radio" name="mode" value="size" checked> Size</label>
-			  <label><input type="radio" name="mode" value="count"> Count</label>
+			  <label><input type="radio" name="mode" value="size"> Size</label>
+			  <label><input type="radio" name="mode" value="count" checked> Count</label>
 			</form>
 		</div>
 
@@ -67,27 +66,12 @@
 		    width = 480 - margin.left - margin.right,
 		    height = 500 - margin.top - margin.bottom;
 
-		var color = d3.scale.category20c();
-
-		var svg = d3.select('#chart').append('svg')
-		    .attr('width', 200)
-		    .attr('height', 100);
-
-		svg.append('rect')
-		    .attr('width', 100)
-		    .attr('height', 100)
-		    .attr('fill', color(0));
-
-		svg.append('rect')
-		    .attr('x', 100)
-		    .attr('width', 100)
-		    .attr('height', 100)
-		    .attr('fill', color(1));
+		//var color = d3.scale.category20c();
 
 		var treemap = d3.layout.treemap()
 		    .size([width, height])
 		    .sticky(true)
-		    .value(function(d) { return d.size; });
+		    .value(function(d) { return d.count; });
 
 		var div = d3.select("#treemap").append("div")
 		    .style("position", "relative")
@@ -153,8 +137,8 @@
 		        	else if(cityLatLong[x].mobility == "w") {
     					actualColor = "#00ff00";
 		        	}
-		        	else {
-		        		actualColor = "#0000cc";
+		        	else if(cityLatLong[x].mobility == "h"){
+		        		actualColor = "#ff0000";
 		        	}
 
 		      		var cityCircle = new google.maps.Circle({

@@ -13,7 +13,8 @@ public class PropertyManager {
 	
 	public String ORIGINAL_DEVICE_FILES =""; //Default value
 	
-	public String FILES_PATH ="";
+	public String READ_PATH ="";
+	public String WRITE_PATH ="";
 	
 	public ArrayList<String> deviceFileList;
 	
@@ -29,7 +30,8 @@ public class PropertyManager {
 		try {
 			Properties properties = new Properties();
 			properties.load(new FileInputStream(propertiesPath+propertiesFileName));
-			this.FILES_PATH = properties.getProperty("FILES_PATH");
+			this.READ_PATH = properties.getProperty("READ_PATH");
+			this.WRITE_PATH = properties.getProperty("WRITE_PATH");
 			this.ORIGINAL_DEVICE_FILES = properties.getProperty("ORIGINAL_DEVICE_FILES");
 			this.deviceFileList = extractFileNames(this.ORIGINAL_DEVICE_FILES);
 			this.locationPrecision = new Double(properties.getProperty("LOCATION_PRECISION"));

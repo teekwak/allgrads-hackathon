@@ -18,7 +18,9 @@ public class Classifier {
 	private Double businessHoursStart = 8.0;
 	private Double businessHoursEnd = 17.0;
 	private ArrayList<String> fileList=new ArrayList<String>();
-	private String filesPath=".";
+	private String readPath=".";
+	private String writePath=".";
+	
 
 	public static void main(String args[]){
 		Classifier classifier = new Classifier();
@@ -28,10 +30,10 @@ public class Classifier {
 	public void run(){
 		this.loadParameters();
 		for(String file:this.fileList){
-			ArrayList<String> buffer = ReadWriteFileBuffer.readToBuffer(this.filesPath+"//"+file);
+			ArrayList<String> buffer = ReadWriteFileBuffer.readToBuffer(this.readPath+"//"+file);
 			HashMap<String, ArrayList<String>> map = buildMap(buffer);
 			buffer = categorize(map);
-			ReadWriteFileBuffer.writeBackToBuffer(buffer,this.filesPath+ "//", "new_"+file);
+			ReadWriteFileBuffer.writeBackToBuffer(buffer,this.writePath+ "//", "new_00025_"+file);
 		}
 	}
 
@@ -39,8 +41,9 @@ public class Classifier {
 	private void loadParameters(){
 		PropertyManager manager = new PropertyManager();
 		manager.initialize();
-		this.filesPath = manager.FILES_PATH;
+		this.readPath = manager.READ_PATH;
 		this.fileList = manager.deviceFileList;
+		this.writePath = manager.WRITE_PATH;
 		this.precision = manager.locationPrecision;
 		this.businessHoursEnd = manager.businessHoursEnd;
 		this.businessHoursStart = manager.businessHoursStart;
@@ -112,15 +115,15 @@ public class Classifier {
 			String line = lineList.get(index);
 			Double latitute = extractField(3,line);
 			Double longitude = extractField(4,line);
-			if((sourceLatitude - latitute != this.precision) || 
-					(sourceLongitude - longitude != this.precision))
+			if((Math.abs(sourceLatitude - latitute) > this.precision) || 
+					Math.abs(sourceLongitude - longitude) > this.precision)
 			{//moving!
 				movementFound=true;
 				break;
 			}
 			index++;
 		}	
-		System.out.println("movementFound: "+movementFound);
+		//System.out.println("movementFound: "+movementFound);
 		return movementFound;
 	}
 
@@ -128,7 +131,7 @@ public class Classifier {
 	private Double extractField(int i, String sourceLine) {
 
 		String[] tokens = sourceLine.split(",");
-		System.out.println(new Double(tokens[i].substring(1, tokens[i].length()-1).trim()));
+	//	System.out.println(new Double(tokens[i].substring(1, tokens[i].length()-1).trim()));
 		return new Double(tokens[i].substring(1, tokens[i].length()-1).trim());
 	}
 

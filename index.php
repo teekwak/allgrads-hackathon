@@ -40,11 +40,20 @@
 			.container div, .container table {
 				display: inline-block;
 			}
+
+			#treemap {
+				margin-top: -30px;
+				z-index: -1;
+			}
+			#currentDate {
+				margin-left: 10px;
+				margin-right: 10px;
+			}
 	    </style>
 	</head>
 	<body>
 		<div style="text-align: center; width=100%;">
-			<h1 style="margin-bottom: 0;">App Usage by Motion</h1>
+			<h1>App Usage by Motion</h1>
 		</div>
 
 		<div class="container">
@@ -52,13 +61,14 @@
 
 			<table>
 				<tr>
-					<td style="z-index:100; top:50px; position: absolute; left:715px;">
-						<span style="font-size:13.5px;margin-right:10px;">Enter a date here (YYYY-MM-dd HH:00:00)</span><input class="stringTime" type="text" value="2015-09-01 04:00:00"/>
-						<button onclick="submitStringTime();">Submit</button>
+					<td style="position: relative; z-index:100; margin-bottom: -50px; width: 100%; text-align: center;">
+						<button onclick="buttonPress(-1);"> - </button>
+						<span id="currentDate">Tue Sep 01 2015 00:00:00 GMT-0700 (PDT)</span>
+						<button onclick="buttonPress(1);"> + </button>
 					</td>
 				</tr>
 				<tr>
-					<td>
+					<td style="position: relative; z-index:-1;">
 						<div id="treemap"></div>
 					</td>
 				</tr>
@@ -164,15 +174,9 @@
 			// my stuff
 			var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-			function submitStringTime() {
-				// get string from input box
-				var text = $('.stringTime').val().replace(/-/g, '/');
-
+			function submitStringTime(timestamp) {
 				// get month number for picking table later
-				var mon = new Date(text).getMonth();
-
-				// convert string to timestamp
-				var ts = new Date(text).getTime() / 1000;
+				var mon = new Date(timestamp).getMonth();
 
 				$.ajax({
 					type: "post",
@@ -180,7 +184,7 @@
 					data: {
 						action: "processTimestamp",
 						month: monthNames[mon].toLowerCase(),
-						timestamp: ts
+						timestamp: timestamp
 					}
 				}).success(function(data) {
 					console.log("success!");
@@ -190,6 +194,28 @@
                     console.log("failed postSubmission: " + textStatus + " " + errorThrown);
                 });
 			}
+
+			function buttonPress(increment) {
+				if(new Date($('#currentDate').text()).getTime() + (increment * 3600000) < 1441090800000) {
+					return;
+				}
+
+				// create timestamp
+				var ts = new Date($('#currentDate').text()).getTime();
+
+				// increment/decrement timestamp
+				if(increment == 1) {
+					ts += 3600000;
+				} else if(increment == -1) {
+					ts -= 3600000;
+				}
+
+				$('#currentDate').text(new Date(ts));
+
+				//submitStringTime($('.stringTime').val());
+			}
+
+			//submitStringTime(new Date($('.stringTime').val()).getTime() / 1000);
 		</script>
 	</body>
 </html>

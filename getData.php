@@ -20,23 +20,24 @@ function processTimestamp() {
 	$tableName = "mobile_signal_info_" . $_POST['month'];
 
 	$mysqli = new mysqli("localhost", "root", "root", "allgrads");
-	#$sql = "INSERT INTO test (deviceId, time, mobilityStatus, latitude, longitude) VALUES (1, 2, 3, 4, 5);";
+	//$sql = "select app_short, COUNT(*) AS `num` from september_first_half WHERE deviceId=84756 GROUP BY app_short;";
 
-/*
-	$result = $mysqli->query("SELECT * FROM TEST WHERE time > 0 AND time < 40");
+	$sql = "SELECT deviceId, latitude, longitude, mobility from september_mobile_signal WHERE time >= " . $_POST['timestamp'] . " AND time < " . ($_POST['timestamp'] + 3600) . " GROUP BY deviceId, mobility ORDER BY mobility";
+
+	$result = $mysqli->query($sql);
 
 	$temp = array();
 	if ($result->num_rows > 0) {
 	    // output data of each row
 	    while($row = $result->fetch_assoc()) {
-	        array_push($temp, $row["deviceId"]);
+	        array_push($temp, $row);
 	    }
 	} else {
 
 	}
 
-	array_push($temp, array("outerKey"=>array("innerKey"=>"innerValue")));
-	echo json_encode(array("status"=>$temp));
+	//array_push($temp, array("outerKey"=>array("innerKey"=>"innerValue")));
+	//echo json_encode(array("status"=>$temp));
 
 	// we are returning a large array with 2 inner arrays
 	// 1st inner array: lat long data with mobility status
@@ -47,9 +48,9 @@ function processTimestamp() {
 
 	// sql command to get count of unique deviceId/mobility pairs
 	// select deviceId, mobility, COUNT(*) AS `count` from september_mobile_signal GROUP BY deviceId, mobility ORDER BY mobility;
-*/
 
-	echo json_encode(array("status"=>$_POST['timestamp']));
+
+	echo json_encode(array("status"=>$temp));
 
 	$mysqli->close();
 }

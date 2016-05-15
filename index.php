@@ -123,54 +123,19 @@
 
 		</script>
 
-		<!-- Google Maps stuff -->
-		<!-- Google Maps stuff -->
-		<!-- Google Maps stuff -->
-
-	    <script>
-	    	// google maps stuff
-	    	var map;
-	      	function initMap() {
-	        	map = new google.maps.Map(document.getElementById('map'), {
-	         		center: {lat: 40.795358, lng: -73.95627},
-	          		zoom: 11
-	        	});
-
-	        	var cityLatLong = [{lat: 40.795358, lng: -73.95627, mobility:"c"}, {lat: 40.805358, lng: -73.95627, mobility:"w"}, {lat: 40.785358, lng: -73.95627, mobility:"h"}];
-
-		        for(var x in cityLatLong) {
-		        	var actualColor = "";
-
-		        	if(cityLatLong[x].mobility == "c") {
-		        		actualColor = "#ff6600";
-		        	}
-		        	else if(cityLatLong[x].mobility == "w") {
-    					actualColor = "#00ff00";
-		        	}
-		        	else if(cityLatLong[x].mobility == "h"){
-		        		actualColor = "#ff0000";
-		        	}
-
-		      		var cityCircle = new google.maps.Circle({
-					   	strokeColor: '#000000',
-					   	strokeOpacity: 0.8,
-					   	strokeWeight: 1,
-					   	fillColor: actualColor,
-					   	fillOpacity: 0.8,
-					   	map: map,
-					   	center: cityLatLong[x],
-					   	radius: 110
-					});
-		        }
-	    	}
-	    </script>
+	    <!--
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhOGbVuv-zvQzhnOeDNRlC8289-VzR6rw&callback=initMap" async defer></script>
+		-->
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhOGbVuv-zvQzhnOeDNRlC8289-VzR6rw"></script>
 
 		<!-- my stuff -->
 		<!-- my stuff -->
 		<!-- my stuff -->
 
 		<script>
+			var map;
+	    	var latLongPairs = [];
+
 			// my stuff
 			var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -187,9 +152,52 @@
 						timestamp: timestamp/1000 // send in seconds because PHP handles seconds
 					}
 				}).success(function(data) {
-					console.log("status: " + data.status); // returned as EPOCH timestamp (IN SECONDS)
-					//console.log(data);
-					//console.log(data.status[3].outerKey.innerKey);
+					//console.log("status: " + data.status); // returned as EPOCH timestamp (IN SECONDS)
+					latLongPairs = [];
+
+					console.log(data);
+					// TRIM each element when they come back
+
+					for(var x in data.status) {
+						latLongPairs.push({lat:data.status[x].latitude, lng:data.status[x].longitude, mobility:data.status[x].mobility});
+					}
+
+					map = new google.maps.Map(document.getElementById('map'), {
+		         		center: {lat: 40.95604846533964, lng: -73.81782531738281},
+		          		zoom: 11
+		        	});
+
+		        	//latLongPairs = [{lat: 40.795358, lng: -73.95627, mobility:" Commuting"}, {lat: 40.805358, lng: -73.95627, mobility:" Work"}, {lat: 40.785358, lng: -73.95627, mobility:" Home"}];
+
+		        	console.log("latLongPairs length: " + latLongPairs.length);
+
+
+			        for(var x in latLongPairs) {
+			        	var actualColor = "";
+
+			        	if(latLongPairs[x].mobility.trim() == "Commuting") {
+			        		actualColor = "#ff6600";
+			        	}
+			        	else if(latLongPairs[x].mobility.trim() == "Work") {
+	    					actualColor = "#00ff00";
+			        	}
+			        	else if(latLongPairs[x].mobility.trim() == "Home"){
+			        		actualColor = "#ff0000";
+			        	}
+
+			      		var cityCircle = new google.maps.Circle({
+						   	strokeColor: '#000000',
+						   	strokeOpacity: 0.8,
+						   	strokeWeight: 1,
+						   	fillColor: actualColor,
+						   	fillOpacity: 0.8,
+						   	map: map,
+						   	center: {lat: parseFloat(latLongPairs[x].lat), lng: parseFloat(latLongPairs[x].lng)},
+						   	radius: 200
+						});
+
+			        }
+
 				}).fail(function(jqXHR, textStatus, errorThrown) {
                     console.log("failed postSubmission: " + textStatus + " " + errorThrown);
                 });

@@ -54,7 +54,7 @@ function processTimestamp() {
 	// select deviceId, mobility, COUNT(*) AS `count` from september_mobile_signal GROUP BY deviceId, mobility ORDER BY mobility;
 
 
-	echo json_encode(array("status"=>$temp));
+	echo json_encode(array("status"=>array("map"=>$temp, "tree"=>"false")));
 
 	$mysqli->close();
 }

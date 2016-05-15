@@ -178,8 +178,8 @@
 					console.log(data);
 					// TRIM each element when they come back
 
-					for(var x in data.status) {
-						latLongPairs.push({lat:data.status[x].latitude, lng:data.status[x].longitude, mobility:data.status[x].mobility, count:data.status[x].count, time:data.status[x].time});
+					for(var x in data.status.map) {
+						latLongPairs.push({lat:data.status.map[x].latitude, lng:data.status.map[x].longitude, mobility:data.status.map[x].mobility, count:data.status.map[x].count, time:data.status.map[x].time});
 					}
 
 					map = new google.maps.Map(document.getElementById('map'), {
@@ -213,7 +213,6 @@
 						   	map: map,
 						   	center: {lat: parseFloat(latLongPairs[x].lat), lng: parseFloat(latLongPairs[x].lng)},
 						   	radius: 200 * (parseInt(latLongPairs[x].count) * 0.2)
-						   	// radisu: 200
 						});
 
 			      		totalCount += parseInt(latLongPairs[x].count);

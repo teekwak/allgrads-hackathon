@@ -5,29 +5,16 @@
    "name": "analytics",
    "children": [
     {
-     "name": "commute",
+     "name": "apps",
      "children": [
-      {"name": "AgglomerativeCluster", "size": 3938, "count":4},
-      {"name": "CommunityStructure", "size": 3812, "count":1},
-      {"name": "MergeEdge", "size": 743, "count":1}
-     ],
-     "color": "#ff6600"
-    },
-    {
-     "name": "work",
-     "children": [
-      {"name": "BetweennessCentrality", "size": 3534, "count":1},
-      {"name": "LinkDistance", "size": 5731, "count":1}
-     ],
-     "color": "#00ff00"
-    },
-    {
-     "name": "home",
-     "children": [
-      {"name": "BetweennessCentrality", "size": 3534, "count":1},
-      {"name": "LinkDistance", "size": 5731, "count":1}
-     ],
-     "color": "#ff0000"
+      {"name": "AgglomerativeCluster", "count":4, "color": "#ff6600"},
+      {"name": "CommunityStructure", "count":1, "color": "#ff6600"},
+      {"name": "MergeEdge", "count":1, "color": "#ff6600"},
+      {"name": "BetweennessCentrality", "count":1, "color": "#00ff00"},
+      {"name": "LinkDistance", "count":1, "color": "#00ff00"},
+      {"name": "BetweennessCentrality", "count":1, "color": "#ff0000"},
+      {"name": "LinkDistance", "count":1, "color": "#ff0000"}
+     ]
     }
    ]
   }

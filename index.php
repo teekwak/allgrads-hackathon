@@ -49,11 +49,6 @@
 		<div>
 			<input class="stringTime" type="text" value="2015-09-01 04:00:00"/>
 			<button onclick="submitStringTime();">Submit</button>
-
-			<form>
-			  <label><input type="radio" name="mode" value="size"> Size</label>
-			  <label><input type="radio" name="mode" value="count" checked> Count</label>
-			</form>
 		</div>
 
 		<!-- D3 stuff -->
@@ -88,20 +83,8 @@
 		      .enter().append("div")
 		      .attr("class", "node")
 		      .call(position)
-		      .style("background", function(d) { return d.children ? d.color : null; })
+		      .style("background", function(d) { return d.children ? null : d.color; })
 		      .text(function(d) { return d.children ? null : d.name; }); // if node does not have children, show
-
-		  d3.selectAll("input").on("change", function change() {
-		    var value = this.value === "count"
-		        ? function(d) { return d.count; } // count is now implemented properly. need count in data
-		        : function(d) { return d.size; }; // size is actually implemented
-
-		    node
-		        .data(treemap.value(value).nodes)
-		      .transition()
-		        .duration(1500)
-		        .call(position);
-		  });
 		});
 
 		function position() {

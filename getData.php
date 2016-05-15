@@ -35,6 +35,8 @@ function processTimestamp() {
 
 	}
 
+	array_push($temp, array("outerKey"=>array("innerKey"=>"innerValue")));
+
 	echo json_encode(array("status"=>$temp));
 
 	$mysqli->close();

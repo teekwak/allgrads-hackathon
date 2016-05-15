@@ -31,6 +31,7 @@
 				}).success(function(data) {
 					console.log("success!");
 					console.log(data);
+					console.log(data.status[3].outerKey.innerKey);
 				}).fail(function(jqXHR, textStatus, errorThrown) {
                     console.log("failed postSubmission: " + textStatus + " " + errorThrown);
                 });

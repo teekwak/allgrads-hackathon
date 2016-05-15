@@ -24,6 +24,7 @@ public class Classifier {
 	private String readPath=".";
 	private String writePath=".";
 	
+	private boolean trim=true;
 
 	public static void main(String args[]){
 		Classifier classifier = new Classifier();
@@ -109,15 +110,15 @@ public class Classifier {
 
 	public boolean hasMovement( ArrayList<String> lineList) {
 
-		Double sourceLatitude = extractField(3,lineList.get(0));
-		Double sourceLongitude = extractField(4,lineList.get(0));
+		Double sourceLatitude = extractGeoField(3,lineList.get(0));
+		Double sourceLongitude = extractGeoField(4,lineList.get(0));
 
 		boolean movementFound = false;
 		int index = 1;
 		while(index<lineList.size()){
 			String line = lineList.get(index);
-			Double latitute = extractField(3,line);
-			Double longitude = extractField(4,line);
+			Double latitute = extractGeoField(3,line);
+			Double longitude = extractGeoField(4,line);
 			if((Math.abs(sourceLatitude - latitute) > this.precision) || 
 					Math.abs(sourceLongitude - longitude) > this.precision)
 			{//moving!
@@ -131,28 +132,41 @@ public class Classifier {
 	}
 
 
-	private Double extractField(int i, String sourceLine) {
+	private Long extractTimeField(int i, String sourceLine) {
 
 		String[] tokens = sourceLine.split(",");
-	//	System.out.println(new Double(tokens[i].substring(1, tokens[i].length()-1).trim()));
-		return new Double(tokens[i].substring(1, tokens[i].length()-1).trim());
+		String field = this.trimDoubleQuotes(tokens[i]);
+	  //  System.out.println(field);
+		return new Long(field);
+	}
+	
+	private Double extractGeoField(int i, String sourceLine) {
+
+		String[] tokens = sourceLine.split(",");
+		String field = this.trimDoubleQuotes(tokens[i]);
+	   // System.out.println(field);
+		return new Double(field);
 	}
 
 	public boolean checkAtHome(String line){
 
-		Integer timeStamp = extractField(2,line).intValue();
+		Long timeStamp = extractTimeField(2,line);
 		Calendar calendar = Calendar.getInstance();
 		Date date = new Date(timeStamp *1000);
 		calendar.setTime(date);
-		Integer hour = calendar.get(Calendar.HOUR_OF_DAY) + 3; //Military 24h day.
+		Integer hour = calendar.get(Calendar.HOUR); //Military 24h day.
 		Integer AmPm = calendar.get(Calendar.AM_PM);
 
-		//System.out.println("hour:"+ hour+", AM/PM:"+AmPm);
+	//	System.out.println("hour:"+ hour+", AM/PM:"+AmPm);
 
-		if(hour>this.businessHoursEnd || hour<this.businessHoursStart)
+		if(hour>this.businessHoursEnd || hour<this.businessHoursStart){
+		//	System.out.println("home hour:"+ hour+", AM/PM:"+AmPm);
 			return true;
-		else
+		}
+		else{
+			//System.out.println("work hour:"+ hour+", AM/PM:"+AmPm);
 			return false;
+		}
 	}
 
 	private ArrayList<String> fillMobilityFields(ArrayList<String>lineList, String mobilityTag){
@@ -165,5 +179,17 @@ public class Classifier {
 		}
 		return taggedLineList;
 	}
+	
+	private String trimDoubleQuotes(String original){
+		if(this.trim){
+			return original = original.substring(1, original.length()-1);
+		}
+		else
+			return original;
+	}
 
+	public void setTrim(boolean b) {
+		this.trim=b;
+	}
+	
 }

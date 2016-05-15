@@ -11,7 +11,7 @@ import java.util.HashMap;
  */
 public class Joiner {
 
-	ArrayList<String> appLogList;
+	ArrayList<String> appLogList= new ArrayList<String>();
 	private boolean trim = true;
 
 	public ArrayList<String>  join(ArrayList<String> mobilityList, ArrayList<String> appLogList){
@@ -31,9 +31,9 @@ public class Joiner {
 
 				ArrayList<String> extractedAppLogList = extractAppLogList(mobilityKey);
 				if(extractedAppLogList.size()>0){
-					String latitude = trimDoubleQuotes(mobilityTokens[3]);
-					String longitude = trimDoubleQuotes(mobilityTokens[4]);
-					String mobility = trimDoubleQuotes(mobilityTokens[5]);
+					String latitude = (mobilityTokens[3]);
+					String longitude = (mobilityTokens[4]);
+					String mobility = (mobilityTokens[5]);
 					extractedAppLogList = appendMobilityFields(extractedAppLogList, latitude,longitude,mobility);
 					joinedList.addAll(extractedAppLogList);
 				}
@@ -60,7 +60,7 @@ public class Joiner {
 		for(int i=0; i<this.appLogList.size();i++){
 			String appLogLine = this.appLogList.get(i);
 			String[] appTokens = appLogLine.split(",");
-			String appKey = trimDoubleQuotes(appTokens[0]);
+			String appKey = (appTokens[0]);
 			if(mobilityKey.matches(appKey)){
 				extractedList.add(appLogLine);
 				linesToRemove.add(i);

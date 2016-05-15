@@ -20,10 +20,12 @@ public class MergerPropertyManager {
 	public String WRITE_PATH ="";
 	
 	public ArrayList<String> septemberFileList;
-	public ArrayList<String> octoberberFileList;
+	public ArrayList<String> octoberFileList;
 	public ArrayList<String> novemberFileList;
 	
-	public String defaultStartDate="";
+	public String SEPTEMBER_START_DATE="";
+	public String OCTOBER_START_DATE="";
+	public String NOVEMBER_START_DATE="";
 	
 	public void initialize(){
 		
@@ -38,12 +40,14 @@ public class MergerPropertyManager {
 			this.septemberFileList = extractFileNames(this.SEPTEMBER_FILES);
 			
 			this.OCTOBER_FILES = properties.getProperty("OCTOBER_FILES");
-			this.octoberberFileList = extractFileNames(this.OCTOBER_FILES);
+			this.octoberFileList = extractFileNames(this.OCTOBER_FILES);
 			
 			this.NOVEMBER_FILES = properties.getProperty("NOVEMBER_FILES");
 			this.novemberFileList = extractFileNames(this.NOVEMBER_FILES);
 			
-			this.defaultStartDate = properties.getProperty("DEFAULT_START_DATE");		
+			this.SEPTEMBER_START_DATE = properties.getProperty("SEPTEMBER_START_DATE");	
+			this.OCTOBER_START_DATE = properties.getProperty("OCTOBER_START_DATE");	
+			this.NOVEMBER_START_DATE = properties.getProperty("NOVEMBER_START_DATE");	
 		} 
 		catch (IOException e) {
 			System.out.println("Could not load properties. Please be sure that the property file is located at: "+propertiesPath);

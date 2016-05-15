@@ -136,7 +136,7 @@ public class Classifier {
 
 		String[] tokens = sourceLine.split(",");
 		String field = this.trimDoubleQuotes(tokens[i]);
-	  //  System.out.println(field);
+	    //System.out.println(field);
 		return new Long(field);
 	}
 	
@@ -154,17 +154,17 @@ public class Classifier {
 		Calendar calendar = Calendar.getInstance();
 		Date date = new Date(timeStamp *1000);
 		calendar.setTime(date);
-		Integer hour = calendar.get(Calendar.HOUR); //Military 24h day.
+		Integer hour = calendar.get(Calendar.HOUR_OF_DAY); //Military 24h day.
 		Integer AmPm = calendar.get(Calendar.AM_PM);
 
 	//	System.out.println("hour:"+ hour+", AM/PM:"+AmPm);
 
 		if(hour>this.businessHoursEnd || hour<this.businessHoursStart){
-		//	System.out.println("home hour:"+ hour+", AM/PM:"+AmPm);
+			//System.out.println("home hour:"+ hour+", AM/PM:"+AmPm+ ", timeStamp:"+timeStamp);
 			return true;
 		}
 		else{
-			//System.out.println("work hour:"+ hour+", AM/PM:"+AmPm);
+			//System.out.println("work hour:"+ hour+", AM/PM:"+AmPm+ ", timeStamp:"+timeStamp);
 			return false;
 		}
 	}

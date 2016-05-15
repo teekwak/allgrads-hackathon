@@ -16,8 +16,7 @@ import mobility.util.ReadWriteFileBuffer;
 public class Selector {
 
 	String writePath=".";
-	ArrayList<String> mobiliyList;
-	ArrayList<String> appLogList;
+	boolean trim=true;
 	
 	public ArrayList<String> select(String filePath,int dateFieldPosition, Long lowerBoundDate, Long upperBoundDate){
 		
@@ -29,12 +28,26 @@ public class Selector {
 		for(String line: buffer){
 			String[] tokens = line.split(",");
 			String lineTimeStamp = tokens[dateFieldPosition];
-			Long lineTimeStampLong = new Long(lineTimeStamp.substring(1, lineTimeStamp.length()-1));
+			String field = this.trimDoubleQuotes(lineTimeStamp);
+			Long lineTimeStampLong = new Long(field);
 			if(lineTimeStampLong<upperBoundDate && lineTimeStampLong>lowerBoundDate){
 				line = line.concat(","+lineTimeStampLong.toString());
 				selectedLines.add(line);
 			}
 		}
 		return selectedLines;
+	}
+	
+	private String trimDoubleQuotes(String original){
+		if(this.trim){
+			return original = original.substring(1, original.length()-1);
+		}
+		else
+			return original;
+	}
+	
+
+	public void setTrim(boolean b) {
+		this.trim=b;
 	}
 }

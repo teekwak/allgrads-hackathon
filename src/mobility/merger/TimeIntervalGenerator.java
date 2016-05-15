@@ -50,7 +50,7 @@ public class TimeIntervalGenerator {
 	}
 	
 	public void initializeDate(String startDateStr){
-		// Tue, 1 Sep 2015 00:00:00 -0800
+		// Tue, 1 Sep 2015 00:00:00 -0400
 		DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
 
 		try {

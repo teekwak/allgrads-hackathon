@@ -179,7 +179,7 @@
 					// TRIM each element when they come back
 
 					for(var x in data.status) {
-						latLongPairs.push({lat:data.status[x].latitude, lng:data.status[x].longitude, mobility:data.status[x].mobility, count:data.status[x].count});
+						latLongPairs.push({lat:data.status[x].latitude, lng:data.status[x].longitude, mobility:data.status[x].mobility, count:data.status[x].count, time:data.status[x].time});
 					}
 
 					map = new google.maps.Map(document.getElementById('map'), {
@@ -197,12 +197,10 @@
 			        	if(latLongPairs[x].mobility.trim() == "Commuting") {
 			        		actualColor = "#ff6600";
 			        	}
-			        	//else if(latLongPairs[x].mobility.trim() == "Work") {
-	    				else if(latLongPairs[x].mobility.trim() == "Home") {
+			        	else if(latLongPairs[x].mobility.trim() == "Work") {
 	    					actualColor = "#ff0000";
 			        	}
-			        	//else if(latLongPairs[x].mobility.trim() == "Home"){
-			        	else if(latLongPairs[x].mobility.trim() == "Work"){
+			        	else if(latLongPairs[x].mobility.trim() == "Home"){
 			        		actualColor = "#00ff00";
 			        	}
 

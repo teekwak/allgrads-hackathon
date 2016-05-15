@@ -10,8 +10,8 @@
 	        padding: 0;
 	      }
 	      #map {
-	        height: 400px;
-	        width: 400px;
+	        height: 500px;
+	        width: 500px;
 	      }
 	      body {
 			  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -44,100 +44,140 @@
 		<div class="container">
 			<div id="map"></div>
 			<div id="treemap"></div>
+			<div id="chart"></div>
 		</div>
 
 		<div>
 			<input class="stringTime" type="text" value="2015-09-01 04:00:00"/>
 			<button onclick="submitStringTime();">Submit</button>
+
+			<form>
+			  <label><input type="radio" name="mode" value="size" checked> Size</label>
+			  <label><input type="radio" name="mode" value="count"> Count</label>
+			</form>
 		</div>
 
+		<!-- D3 stuff -->
+		<!-- D3 stuff -->
+		<!-- D3 stuff -->
+
 		<script>
-			// create canvas
-			var margin = {top: 40, right: 10, bottom: 10, left: 10},
-			    width = 480 - margin.left - margin.right,
-			    height = 500 - margin.top - margin.bottom;
+			// d3 stuff
+		var margin = {top: 40, right: 10, bottom: 10, left: 10},
+		    width = 480 - margin.left - margin.right,
+		    height = 500 - margin.top - margin.bottom;
 
-			var color = d3.scale.category20c();
+		var color = d3.scale.category20c();
 
-			var treemap = d3.layout.treemap()
-			    .size([width, height])
-			    .sticky(true)
-			    .value(function(d) { return d.value; });
+		var svg = d3.select('#chart').append('svg')
+		    .attr('width', 200)
+		    .attr('height', 100);
 
-			var div = d3.select("#treemap").append("div")
-			    .style("position", "relative")
-			    .style("width", (width + margin.left + margin.right) + "px")
-			    .style("height", (height + margin.top + margin.bottom) + "px")
-			    .style("left", margin.left + "px")
-			    .style("top", margin.top + "px");
+		svg.append('rect')
+		    .attr('width', 100)
+		    .attr('height', 100)
+		    .attr('fill', color(0));
 
-			d3.json("data.json", function(error, root) {
-			  if (error) throw error;
+		svg.append('rect')
+		    .attr('x', 100)
+		    .attr('width', 100)
+		    .attr('height', 100)
+		    .attr('fill', color(1));
 
-			  var node = div.datum(root).selectAll(".node")
-			      .data(treemap.nodes)
-			    .enter().append("div")
-			      .attr("class", "node")
-			      .call(position)
-			      .style("background", function(d) { return d.children ? color(d.name) : null; })
-			      .text(function(d) { return d.children ? null : d.name; });
+		var treemap = d3.layout.treemap()
+		    .size([width, height])
+		    .sticky(true)
+		    .value(function(d) { return d.size; });
 
-			  d3.selectAll("input").on("change", function change() {
-			    var value = this.value === "count"
-			        ? function() { return 1; }
-			        : function(d) { return d.value; };
+		var div = d3.select("#treemap").append("div")
+		    .style("position", "relative")
+		    .style("width", (width + margin.left + margin.right) + "px")
+		    .style("height", (height + margin.top + margin.bottom) + "px")
+		    .style("left", margin.left + "px")
+		    .style("top", margin.top + "px");
 
-			    node
-			        .data(treemap.value(value).nodes)
-			      .transition()
-			        .duration(1500)
-			        .call(position);
-			  });
-			});
+		d3.json("data.json", function(error, root) {
+		  if (error) throw error;
 
-			function position() {
-			  this.style("left", function(d) { return d.x + "px"; })
-			      .style("top", function(d) { return d.y + "px"; })
-			      .style("width", function(d) { return Math.max(0, d.dx - 1) + "px"; })
-			      .style("height", function(d) { return Math.max(0, d.dy - 1) + "px"; });
-			}
+		  var node = div.datum(root).selectAll(".node")
+		      .data(treemap.nodes)
+		      .enter().append("div")
+		      .attr("class", "node")
+		      .call(position)
+		      .style("background", function(d) { return d.children ? d.color : null; })
+		      .text(function(d) { return d.children ? null : d.name; }); // if node does not have children, show
+
+		  d3.selectAll("input").on("change", function change() {
+		    var value = this.value === "count"
+		        ? function(d) { return d.count; } // count is now implemented properly. need count in data
+		        : function(d) { return d.size; }; // size is actually implemented
+
+		    node
+		        .data(treemap.value(value).nodes)
+		      .transition()
+		        .duration(1500)
+		        .call(position);
+		  });
+		});
+
+		function position() {
+		  this.style("left", function(d) { return d.x + "px"; })
+		      .style("top", function(d) { return d.y + "px"; })
+		      .style("width", function(d) { return Math.max(0, d.dx - 1) + "px"; })
+		      .style("height", function(d) { return Math.max(0, d.dy - 1) + "px"; });
+		}
 
 		</script>
 
+		<!-- Google Maps stuff -->
+		<!-- Google Maps stuff -->
+		<!-- Google Maps stuff -->
 
 	    <script>
-	      var map;
-	      function initMap() {
-	        map = new google.maps.Map(document.getElementById('map'), {
-	          center: {lat: 40.795358, lng: -73.95627},
-	          zoom: 11
-	        });
+	    	// google maps stuff
+	    	var map;
+	      	function initMap() {
+	        	map = new google.maps.Map(document.getElementById('map'), {
+	         	 center: {lat: 40.795358, lng: -73.95627},
+	          	zoom: 11
+	        	});
 
-	        var marker1 = new google.maps.Marker({
-	        	position: {lat: 40.795358, lng: -73.95627},
-	        	map: map,
-	        	icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
-	        });
+	        	var cityLatLong = [{lat: 40.795358, lng: -73.95627, mobility:"c"}, {lat: 40.805358, lng: -73.95627, mobility:"w"}, {lat: 40.785358, lng: -73.95627, mobility:"h"}];
 
-	        var marker2 = new google.maps.Marker({
-	        	position: {lat: 40.805358, lng: -73.95627},
-	        	map: map,
-	        	icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
-	        });
+		        for(var x in cityLatLong) {
+		        	var actualColor = "";
 
-	        var marker3 = new google.maps.Marker({
-	        	position: {lat: 40.785358, lng: -73.95627},
-	        	map: map,
-	        	icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-	        });
-	      }
+		        	if(cityLatLong[x].mobility == "c") {
+		        		actualColor = "#ff6600";
+		        	}
+		        	else if(cityLatLong[x].mobility == "w") {
+    					actualColor = "#00ff00";
+		        	}
+		        	else {
+		        		actualColor = "#0000cc";
+		        	}
+
+		      		var cityCircle = new google.maps.Circle({
+					   	strokeColor: '#000000',
+					   	strokeOpacity: 0.8,
+					   	strokeWeight: 1,
+					   	fillColor: actualColor,
+					   	fillOpacity: 0.8,
+					   	map: map,
+					   	center: cityLatLong[x],
+					   	radius: 110
+					});
+		        }
+	    	}
 	    </script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhOGbVuv-zvQzhnOeDNRlC8289-VzR6rw&callback=initMap" async defer></script>
 
-
-
+		<!-- my stuff -->
+		<!-- my stuff -->
+		<!-- my stuff -->
 
 		<script>
+			// my stuff
 			var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 			function submitStringTime() {

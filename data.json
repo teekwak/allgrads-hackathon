@@ -1,27 +1,27 @@
 {
-	"name": "Max",
-	"value": 100,
-	"children": [
-		{
-			"name": "Sylvia",
-			"value": 75,
-			"children": [
-				{"name": "Craig", "value": "25"},
-				{"name": "Robin", "value": "25"},
-				{"name": "Anna", "value": "25"}
-			]
-		},
-		{
-			"name": "David",
-			"value": 75,
-			"children": [
-				{"name": "Jeff", "value": "25"},
-				{"name": "George", "value": "25"}
-			]
-		},
-		{
-			"name": "Mr. X",
-			"value": 75
-		}
-	]
+ "name": "flare",
+ "children": [
+  {
+   "name": "analytics",
+   "children": [
+    {
+     "name": "cluster",
+     "children": [
+      {"name": "AgglomerativeCluster", "size": 3938, "count":2},
+      {"name": "CommunityStructure", "size": 3812, "count":1},
+      {"name": "MergeEdge", "size": 743, "count":1}
+     ],
+     "color": "#de9ed6"
+    },
+    {
+     "name": "graph",
+     "children": [
+      {"name": "BetweennessCentrality", "size": 3534, "count":1},
+      {"name": "LinkDistance", "size": 5731, "count":1}
+     ],
+     "color": "blue"
+    }
+   ]
+  }
+ ]
 }

@@ -81,7 +81,7 @@ public class Classifier {
 			ArrayList<String> list = entry.getValue();
 			if(list!=null && list.size()>0){
 				String mobilityFlag="";
-				if(checkMovement(list)){
+				if(hasMovement(list)){
 					mobilityFlag = "Commuting";
 				}
 				else{
@@ -101,25 +101,27 @@ public class Classifier {
 	}
 
 
-	private boolean checkMovement( ArrayList<String> lineList) {
+	public boolean hasMovement( ArrayList<String> lineList) {
 
 		Double sourceLatitude = extractField(3,lineList.get(0));
 		Double sourceLongitude = extractField(4,lineList.get(0));
 
-		boolean noMovementFound = true;
+		boolean movementFound = false;
 		int index = 1;
-		while(noMovementFound || index<lineList.size()){
+		while(index<lineList.size()){
 			String line = lineList.get(index);
 			Double latitute = extractField(3,line);
 			Double longitude = extractField(4,line);
-			if((sourceLatitude - latitute > this.precision) || 
-					(sourceLongitude - longitude > this.precision))
+			if((sourceLatitude - latitute != this.precision) || 
+					(sourceLongitude - longitude != this.precision))
 			{//moving!
-				noMovementFound=false;
+				movementFound=true;
+				break;
 			}
 			index++;
 		}	
-		return noMovementFound;
+		System.out.println("movementFound: "+movementFound);
+		return movementFound;
 	}
 
 
@@ -138,7 +140,7 @@ public class Classifier {
 		Integer hour = calendar.get(Calendar.HOUR_OF_DAY); //Military 24h day.
 		Integer AmPm = calendar.get(Calendar.AM_PM);
 
-		System.out.println("hour:"+ hour+", AM/PM:"+AmPm);
+		//System.out.println("hour:"+ hour+", AM/PM:"+AmPm);
 
 		if(hour>this.businessHoursEnd || hour<this.businessHoursStart)
 			return true;

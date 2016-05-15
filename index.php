@@ -52,8 +52,8 @@
 
 			<table>
 				<tr>
-					<td style="z-index:100; top:50px; position: absolute; right: 340px;">
-						<input class="stringTime" type="text" value="2015-09-01 04:00:00"/>
+					<td style="z-index:100; top:50px; position: absolute; left:715px;">
+						<span style="font-size:13.5px;margin-right:10px;">Enter a date here (YYYY-MM-dd HH:00:00)</span><input class="stringTime" type="text" value="2015-09-01 04:00:00"/>
 						<button onclick="submitStringTime();">Submit</button>
 					</td>
 				</tr>

@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import mobility.util.ClassifierPropertyManager;
+import mobility.util.ReadWriteFileBuffer;
+
 /**
  * Categorizes each line as commuting, work, or home.
  * 
@@ -39,7 +42,7 @@ public class Classifier {
 
 	
 	private void loadParameters(){
-		PropertyManager manager = new PropertyManager();
+		ClassifierPropertyManager manager = new ClassifierPropertyManager();
 		manager.initialize();
 		this.readPath = manager.READ_PATH;
 		this.fileList = manager.deviceFileList;

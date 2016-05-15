@@ -67,7 +67,7 @@
 				<tr>
 					<td style="position: relative; z-index:100; margin-bottom: -50px; width: 100%; text-align: center;">
 						<button onclick="buttonPress(-1);"> - </button>
-						<span id="currentDate">Tue Sep 01 2015 00:00:00 GMT-0700 (PDT)</span>
+						<span id="currentDate">Tue Sep 01 2015 00:00:00</span>
 						<button onclick="buttonPress(1);"> + </button>
 					</td>
 				</tr>
@@ -168,7 +168,7 @@
 					data: {
 						action: "processTimestamp",
 						month: monthNames[month].toLowerCase(),
-						timestamp: timestamp/1000 // send in seconds because PHP handles seconds
+						timestamp: timestamp/1000// send in seconds because PHP handles seconds
 					}
 				}).success(function(data) {
 					//console.log("status: " + data.status); // returned as EPOCH timestamp (IN SECONDS)
@@ -242,7 +242,10 @@
 					ts -= 3600000;
 				}
 
-				$('#currentDate').text(new Date(ts));
+				var parts = (new Date(ts)).toString().split(" ");
+				var newDateString = parts[0] + " " + parts[1] + " " + parts[2] + " " + parts[3] + " " + parts[4];
+
+				$('#currentDate').text(newDateString);
 
 				submitStringTime(ts);
 			}

@@ -34,22 +34,38 @@
 			  text-indent: 2px;
 			}
 
-			.container div {
+			.container {
+				text-align: center;
+			}
+			.container div, .container table {
 				display: inline-block;
 			}
 	    </style>
 	</head>
 	<body>
+		<div style="text-align: center; width=100%;">
+			<h1 style="margin-bottom: 0;">App Usage by Motion</h1>
+		</div>
 
 		<div class="container">
 			<div id="map"></div>
-			<div id="treemap"></div>
+
+			<table>
+				<tr>
+					<td style="z-index:100; top:50px; position: absolute; right: 340px;">
+						<input class="stringTime" type="text" value="2015-09-01 04:00:00"/>
+						<button onclick="submitStringTime();">Submit</button>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div id="treemap"></div>
+					</td>
+				</tr>
+			</table>
 		</div>
 
-		<div>
-			<input class="stringTime" type="text" value="2015-09-01 04:00:00"/>
-			<button onclick="submitStringTime();">Submit</button>
-		</div>
+
 
 		<!-- D3 stuff -->
 		<!-- D3 stuff -->
@@ -73,7 +89,8 @@
 		    .style("width", (width + margin.left + margin.right) + "px")
 		    .style("height", (height + margin.top + margin.bottom) + "px")
 		    .style("left", margin.left + "px")
-		    .style("top", margin.top + "px");
+		    .style("top", margin.top + "px")
+		    .style("z-index", -1);
 
 		d3.json("data.json", function(error, root) {
 		  if (error) throw error;

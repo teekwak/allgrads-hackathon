@@ -1,0 +1,37 @@
+package_name,app_name,ad_monetized,categories_M2C,categories_pop
+com.facebook.katana,facebook,yes,,social
+com.facebook.orca,facebook messenger,no,,messaging
+com.netflix.mediaclient,netflix,yes,,video
+com.spotify.music,spotify,yes,,audio
+com.yelp.android,yelp,yes,,ecommerce
+com.pinterest,pinterest,yes,,photo
+com.pandora.android,pandora,yes,,audio
+com.audible.application,audible,yes,,audio
+com.ebay.mobile,ebay,yes,,ecommerce
+com.instagram.android,instagram,no,,photo
+com.whatsapp,whatsapp,no,,messaging
+com.snapchat.android,snapchat,no,,photo
+com.google.android.apps.map,google maps,no,,map
+com.accuweather.android,accuweather,no,,weather
+com.google.android.youtube,youtube,yes,,video
+com.android.chrome,chrome,no,,browser
+org.mozilla.firefox,firefox,no,,browser
+com.twitter.android,twitter,no,,social
+com.yahoo.mobile.client.android.mail,yahoo email,no,,email
+com.skype.android.access,skype,no,,video conference
+com.viber.voip,viber,no,,video conference
+com.eharmony,eharmony,yes,,dating
+com.okcupid.okcupid,okcupid,yes,,dating
+com.tinder,tinder,yes,,dating
+com.king.candycrushsaga,candy crush,,,game
+com.kiloo.subwaysurf,subway surfers,,,game
+me.pou.app,pou,,,game
+com.imangi.templerun2,temple run,,,game
+com.fingersoft.hillclimb,hill climb,,,game
+com.outfit7.mytalkingtomfree,my talking tom,,,game
+com.rovio.angrybirds,angry birds,,,game
+com.rovio.angrybirdsfights,angry birds fights,,,game
+com.rovio.angrybirdsseasons,angry birds seasons,,,game
+com.halfbrick.fruitninjafree,fruit ninja,,,game
+com.supercell.clashofclans,clash of clans,,,game
+com.google.android.email,gmail,,,email

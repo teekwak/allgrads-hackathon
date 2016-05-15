@@ -27,7 +27,7 @@
 
 			.node {
 			  border: solid 1px white;
-			  font: 10px sans-serif;
+			  font: 14px sans-serif;
 			  line-height: 12px;
 			  overflow: hidden;
 			  position: absolute;
@@ -168,7 +168,7 @@
 					data: {
 						action: "processTimestamp",
 						month: monthNames[month].toLowerCase(),
-						timestamp: timestamp/1000// send in seconds because PHP handles seconds
+						timestamp: timestamp/1000 // send in seconds because PHP handles seconds
 					}
 				}).success(function(data) {
 					//console.log("status: " + data.status); // returned as EPOCH timestamp (IN SECONDS)

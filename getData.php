@@ -22,7 +22,11 @@ function processTimestamp() {
 	$mysqli = new mysqli("localhost", "root", "root", "allgrads");
 	//$sql = "select app_short, COUNT(*) AS `num` from september_first_half WHERE deviceId=84756 GROUP BY app_short;";
 
-	$sql = "SELECT deviceId, latitude, longitude, mobility from september_mobile_signal WHERE time >= " . $_POST['timestamp'] . " AND time < " . ($_POST['timestamp'] + 3600) . " GROUP BY deviceId, mobility ORDER BY mobility";
+	//$sql = "SELECT deviceId, latitude, longitude, mobility from september_mobile_signal WHERE time >= " . $_POST['timestamp'] . " AND time < " . ($_POST['timestamp'] + 3600) . " GROUP BY deviceId, mobility";
+
+	$sql = "SELECT deviceId, latitude, longitude, mobility, COUNT(*) as `count` from september_mobile_signal WHERE time >= " . $_POST['timestamp'] . " AND time < " . ($_POST['timestamp'] + 3600) . " GROUP BY deviceId, latitude, longitude, mobility";
+
+	//$sql = "SELECT deviceId, time, latitude, longitude, mobility from september_mobile_signal WHERE time >= " . $_POST['timestamp'] . " AND time < " . ($_POST['timestamp'] + 3600) . " GROUP BY deviceId, time, latitude, longitude, mobility;";
 
 	$result = $mysqli->query($sql);
 

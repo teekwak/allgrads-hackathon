@@ -159,7 +159,7 @@
 					// TRIM each element when they come back
 
 					for(var x in data.status) {
-						latLongPairs.push({lat:data.status[x].latitude, lng:data.status[x].longitude, mobility:data.status[x].mobility});
+						latLongPairs.push({lat:data.status[x].latitude, lng:data.status[x].longitude, mobility:data.status[x].mobility, count:data.status[x].count});
 					}
 
 					map = new google.maps.Map(document.getElementById('map'), {
@@ -170,7 +170,6 @@
 		        	//latLongPairs = [{lat: 40.795358, lng: -73.95627, mobility:" Commuting"}, {lat: 40.805358, lng: -73.95627, mobility:" Work"}, {lat: 40.785358, lng: -73.95627, mobility:" Home"}];
 
 		        	console.log("latLongPairs length: " + latLongPairs.length);
-
 
 			        for(var x in latLongPairs) {
 			        	var actualColor = "";
@@ -185,6 +184,8 @@
 			        		actualColor = "#ff0000";
 			        	}
 
+			        	// increase radius by count
+
 			      		var cityCircle = new google.maps.Circle({
 						   	strokeColor: '#000000',
 						   	strokeOpacity: 0.8,
@@ -193,7 +194,8 @@
 						   	fillOpacity: 0.8,
 						   	map: map,
 						   	center: {lat: parseFloat(latLongPairs[x].lat), lng: parseFloat(latLongPairs[x].lng)},
-						   	radius: 200
+						   	radius: 200 * (parseInt(latLongPairs[x].count) * 0.2)
+						   	// radisu: 200
 						});
 
 			        }

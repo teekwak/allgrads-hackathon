@@ -1,11 +1,11 @@
-package mobility.classifier;
+package mobility.util;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Properties;
 
-public class PropertyManager {
+public class ClassifierPropertyManager {
 
 	private String propertiesFileName="classifier.properties";
 	
@@ -56,7 +56,7 @@ public class PropertyManager {
 		return list;
 	}
 	
-	
+		
 
 }
 

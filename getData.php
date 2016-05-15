@@ -19,10 +19,10 @@ else {
 function processTimestamp() {
 	$tableName = "mobile_signal_info_" . $_POST['month'];
 
-
 	$mysqli = new mysqli("localhost", "root", "root", "allgrads");
 	#$sql = "INSERT INTO test (deviceId, time, mobilityStatus, latitude, longitude) VALUES (1, 2, 3, 4, 5);";
 
+/*
 	$result = $mysqli->query("SELECT * FROM TEST WHERE time > 0 AND time < 40");
 
 	$temp = array();
@@ -36,8 +36,8 @@ function processTimestamp() {
 	}
 
 	array_push($temp, array("outerKey"=>array("innerKey"=>"innerValue")));
-
-	echo json_encode(array("status"=>$temp));
+*/
+	echo json_encode(array("status"=>$_POST['timestamp']));
 
 	$mysqli->close();
 }

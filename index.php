@@ -132,8 +132,8 @@
 	    	var map;
 	      	function initMap() {
 	        	map = new google.maps.Map(document.getElementById('map'), {
-	         	 center: {lat: 40.795358, lng: -73.95627},
-	          	zoom: 11
+	         		center: {lat: 40.795358, lng: -73.95627},
+	          		zoom: 11
 	        	});
 
 	        	var cityLatLong = [{lat: 40.795358, lng: -73.95627, mobility:"c"}, {lat: 40.805358, lng: -73.95627, mobility:"w"}, {lat: 40.785358, lng: -73.95627, mobility:"h"}];
@@ -174,28 +174,26 @@
 			// my stuff
 			var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+			// INPUT MUST BE MILLISECONDS!
 			function submitStringTime(timestamp) {
-				// get month number for picking table later
-				var mon = new Date(timestamp).getMonth();
-
 				$.ajax({
 					type: "post",
 					url: "http://localhost:9000/getData.php",
 					data: {
 						action: "processTimestamp",
-						month: monthNames[mon].toLowerCase(),
-						timestamp: timestamp
+						timestamp: timestamp/1000 // send in seconds because PHP handles seconds
 					}
 				}).success(function(data) {
-					console.log("success!");
-					console.log(data);
-					console.log(data.status[3].outerKey.innerKey);
+					console.log("status: " + data.status); // returned as EPOCH timestamp (IN SECONDS)
+					//console.log(data);
+					//console.log(data.status[3].outerKey.innerKey);
 				}).fail(function(jqXHR, textStatus, errorThrown) {
                     console.log("failed postSubmission: " + textStatus + " " + errorThrown);
                 });
 			}
 
 			function buttonPress(increment) {
+				// check if time is below wanted interval
 				if(new Date($('#currentDate').text()).getTime() + (increment * 3600000) < 1441090800000) {
 					return;
 				}
@@ -212,10 +210,10 @@
 
 				$('#currentDate').text(new Date(ts));
 
-				//submitStringTime($('.stringTime').val());
+				submitStringTime(ts);
 			}
 
-			//submitStringTime(new Date($('.stringTime').val()).getTime() / 1000);
+			submitStringTime(new Date($('#currentDate').text()).getTime());
 		</script>
 	</body>
 </html>

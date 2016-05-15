@@ -46,7 +46,7 @@ function processTimestamp() {
 	// select app_short, COUNT(*) AS `num` from september_first_half WHERE deviceId=84756 GROUP BY app_short;
 
 	// sql command to get count of unique deviceId/mobility pairs
-	// select deviceId, mobility, COUNT(*) AS `count` from september_mobile_signal GROUP BY deviceId, mobility;
+	// select deviceId, mobility, COUNT(*) AS `count` from september_mobile_signal GROUP BY deviceId, mobility ORDER BY mobility;
 */
 
 	echo json_encode(array("status"=>$_POST['timestamp']));

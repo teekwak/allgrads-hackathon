@@ -176,11 +176,14 @@
 
 			// INPUT MUST BE MILLISECONDS!
 			function submitStringTime(timestamp) {
+				var month = new Date(timestamp).getMonth();
+
 				$.ajax({
 					type: "post",
 					url: "http://localhost:9000/getData.php",
 					data: {
 						action: "processTimestamp",
+						month: monthNames[month].toLowerCase(),
 						timestamp: timestamp/1000 // send in seconds because PHP handles seconds
 					}
 				}).success(function(data) {

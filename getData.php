@@ -36,7 +36,19 @@ function processTimestamp() {
 	}
 
 	array_push($temp, array("outerKey"=>array("innerKey"=>"innerValue")));
+	echo json_encode(array("status"=>$temp));
+
+	// we are returning a large array with 2 inner arrays
+	// 1st inner array: lat long data with mobility status
+	// 2nd inner array: list of application names and count and mobility (can have Facebook = home and Facebook = work)
+
+	// sql command to get the count of unique app_short from september_first_half given condition
+	// select app_short, COUNT(*) AS `num` from september_first_half WHERE deviceId=84756 GROUP BY app_short;
+
+	// sql command to get count of unique deviceId/mobility pairs
+	// select deviceId, mobility, COUNT(*) AS `count` from september_mobile_signal GROUP BY deviceId, mobility;
 */
+
 	echo json_encode(array("status"=>$_POST['timestamp']));
 
 	$mysqli->close();
